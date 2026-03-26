@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Html viewer</title>
+    <style>
+        body { margin: 0; background: #000000; color: #fff; font-family: sans-serif; display: flex; flex-direction: column; height: 100vh; }
+        header { padding: 10px; background: #fe000b; border-bottom: 2px solid #808080; display: flex; justify-content: space-between; }
+        .main { display: flex; flex: 1; }
+
+        #editor { flex: 1; background: #000f00; color: #fff; border: none; padding: 20px; font-size: 16px; outline: none; border-right: 2px solid #333; }
+
+        #preview { flex: 1; background: white; border: none; }
+        button { background: #ffffff; border: none; padding: 5px 15px; cursor: pointer; font-weight: bold; border-radius: 5px; }
+}
+    </style>
+</head>
+<body>
+
+<header>
+    <span>html viewer with js and css</span>
+    <button onclick="clearCode()">RESET</button>
+</header>
+
+<div class="main">
+    <textarea id="editor" spellcheck="false" oninput="debounceUpdate()"></textarea>
+    <iframe id="preview"></iframe>
+</div>
+
+<script>
+    const editor = document.getElementById('editor');
+    const preview = document.getElementById('preview');
+    let timer;
+
+    function debounceUpdate() {
+        clearTimeout(timer);
+        timer = setTimeout(update, 500);
+    }
+
+    function update() {
+        const code = editor.value;
+ 
+        preview.srcdoc = code; 
+    }
+
+    function clearCode() {
+        editor.value = '';
+        update();
+    }
+
+
+    editor.value = 'Hello World'
+    
+    update();
+</script>
+</body>
+</html>
